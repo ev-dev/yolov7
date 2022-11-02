@@ -82,7 +82,7 @@ def select_device(device='', batch_size=None):
     else:
         s += 'CPU\n'
 
-    logger.info(s.encode().decode('ascii', 'ignore') if platform.system() == 'Windows' else s)  # emoji-safe
+    # logger.info(s.encode().decode('ascii', 'ignore') if platform.system() == 'Windows' else s)  # emoji-safe
     return torch.device('cuda:0' if cuda else 'cpu')
 
 
@@ -222,7 +222,7 @@ def model_info(model, verbose=False, img_size=640):
     except (ImportError, Exception):
         fs = ''
 
-    logger.info(f"Model Summary: {len(list(model.modules()))} layers, {n_p} parameters, {n_g} gradients{fs}")
+    # logger.info(f"Model Summary: {len(list(model.modules()))} layers, {n_p} parameters, {n_g} gradients{fs}")
 
 
 def load_classifier(name='resnet101', n=2):
@@ -345,7 +345,7 @@ class TracedModel(nn.Module):
     def __init__(self, model=None, device=None, img_size=(640,640)): 
         super(TracedModel, self).__init__()
         
-        print(" Convert model to Traced-model... ") 
+        # print(" Convert model to Traced-model... ") 
         self.stride = model.stride
         self.names = model.names
         self.model = model
@@ -362,11 +362,11 @@ class TracedModel(nn.Module):
         traced_script_module = torch.jit.trace(self.model, rand_example, strict=False)
         #traced_script_module = torch.jit.script(self.model)
         traced_script_module.save("traced_model.pt")
-        print(" traced_script_module saved! ")
+        # print(" traced_script_module saved! ")
         self.model = traced_script_module
         self.model.to(device)
         self.detect_layer.to(device)
-        print(" model is traced! \n") 
+        # print(" model is traced! \n") 
 
     def forward(self, x, augment=False, profile=False):
         out = self.model(x)
