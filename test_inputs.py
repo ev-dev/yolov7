@@ -1,4 +1,5 @@
 # import argparse
+import sys
 import fileinput
 
 # def test_inputs():
@@ -15,10 +16,11 @@ if __name__ == "__main__":
     num_lines_processed = 0
 
     for line in fileinput.input():
-        if num_lines_processed == 0:
-            line_data = line[3:].rstrip()
-        else:
-            line_data = line.rstrip()
+        if sys.platform == "win32":
+            if num_lines_processed == 0:
+                line_data = line[3:].rstrip()
+            else:
+                line_data = line.rstrip()
 
         num_lines_processed += 1
 
