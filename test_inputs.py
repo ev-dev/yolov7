@@ -21,6 +21,8 @@ if __name__ == "__main__":
                 line_data = line[3:].rstrip()
             else:
                 line_data = line.rstrip()
+        else:
+            line_data = line.rstrip()
 
         num_lines_processed += 1
 
