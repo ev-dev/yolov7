@@ -1,5 +1,6 @@
 import argparse
 import fileinput
+import sys
 import time
 from pathlib import Path
 
@@ -216,8 +217,11 @@ if __name__ == '__main__':
             num_stdin_lines_processed = 0
 
             for line in fileinput.input():
-                if num_stdin_lines_processed == 0:
-                    line_data = line[3:].rstrip()
+                if sys.platform == "win32":
+                    if num_stdin_lines_processed == 0:
+                        line_data = line[3:].rstrip()
+                    else:
+                        line_data = line.rstrip()
                 else:
                     line_data = line.rstrip()
 
