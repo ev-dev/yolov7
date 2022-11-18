@@ -18,7 +18,7 @@ from utils.torch_utils import select_device, load_classifier, time_synchronized,
 
 
 
-def detect(save_img=False):
+def detect(source, save_img=False):
     weights, view_img, save_txt, imgsz, trace = opt.source, opt.weights, opt.view_img, opt.save_txt, opt.img_size, not opt.no_trace
     save_img = not opt.nosave and not source.endswith('.txt')  # save inference images
     webcam = source.isnumeric() or source.endswith('.txt') or source.lower().startswith(
@@ -228,5 +228,4 @@ if __name__ == '__main__':
                 num_stdin_lines_processed += 1
                 print(f'line# {num_stdin_lines_processed} -> {line_data}')
 
-                source = line_data
-                detect()
+                detect(source=line_data)
