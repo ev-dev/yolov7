@@ -126,16 +126,22 @@ class _RepeatSampler(object):
 
 
 class LoadImages:  # for inference
-    def __init__(self, path, img_size=640, stride=32):
-        p = str(Path(path).absolute())  # os-agnostic absolute path
-        if '*' in p:
-            files = sorted(glob.glob(p, recursive=True))  # glob
-        elif os.path.isdir(p):
-            files = sorted(glob.glob(os.path.join(p, '*.*')))  # dir
-        elif os.path.isfile(p):
-            files = [p]  # files
+    def __init__(self, path='', source_file='', img_size=640, stride=32):
+        if len(source_file) >= 1:
+            print(f'using source file at: {source_file}\n')
+            with open(source_file) as f:
+                files = [line.rstrip() for line in f]
+                print(f'source file contiained {len(files)} paths\n')
         else:
-            raise Exception(f'ERROR: {p} does not exist')
+            p = str(Path(path).absolute())  # os-agnostic absolute path
+            if '*' in p:
+                files = sorted(glob.glob(p, recursive=True))  # glob
+            elif os.path.isdir(p):
+                files = sorted(glob.glob(os.path.join(p, '*.*')))  # dir
+            elif os.path.isfile(p):
+                files = [p]  # files
+            else:
+                raise Exception(f'ERROR: {p} does not exist')
 
         images = [x for x in files if x.split('.')[-1].lower() in img_formats]
         videos = [x for x in files if x.split('.')[-1].lower() in vid_formats]

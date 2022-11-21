@@ -24,6 +24,8 @@ if __name__ == "__main__":
         else:
             line_data = line.rstrip()
 
+        # line_data = line.rstrip()
+
         num_lines_processed += 1
 
         print(f'line# {num_lines_processed} -> {line_data}')
